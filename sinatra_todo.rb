@@ -1,14 +1,14 @@
 require 'rubygems'
 require 'sinatra'
 
-require 'lib/todo'
+require_relative 'lib/todo'
 
 TODO_FILE = ENV['TODO_FILE'] || ARGV[0] || './todo'
 
 # Stupid simple auth
-use Rack::Auth::Basic do |username, password|
-  username == 'admin' && password == 'todos'
-end
+# use Rack::Auth::Basic do |username, password|
+#  username == 'admin' && password == 'todos'
+# end
 
 helpers do
   include Rack::Utils
