@@ -120,7 +120,7 @@ class Todo
 
     begin
       tmp = Tempfile.new("todo")
-      tmp.write(file_data)
+      tmp.write(file_data.join)
       tmp.rewind
       FileUtils.mv(tmp.path, TODO_FILE)
     ensure
