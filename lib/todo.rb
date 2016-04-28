@@ -12,7 +12,7 @@ class Todo
   attr_accessor :raw_line
 
   def active?
-    self.priority && !self.priority.match(CompleteProirityRegex)
+    self.priority && !Todo.is_done(self.priority)
   end
 
   def has_tag?(tag)
@@ -23,7 +23,11 @@ class Todo
     self.raw_line = content
     write_to_disk
   end
-  
+
+  def self.is_done(priority)
+    priority.match(CompleteProirityRegex)
+  end
+
   def self.all
     todos = []
     read_from_disk.each_with_index do |line, line_number|
@@ -70,7 +74,7 @@ class Todo
       line =~ PriorityContentRegex
       priorities << $1.strip if $1
     end
-    priorities.uniq.sort
+    priorities.uniq.sort.select { |priority|  !Todo.is_done(priority)  }
   end
 
   def self.tags
