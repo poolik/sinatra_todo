@@ -24,6 +24,11 @@ class Todo
     write_to_disk
   end
 
+  def done
+    self.raw_line[0] = 'X'
+    update(self.raw_line.chomp)
+  end
+
   def self.is_done(priority)
     priority.match(CompleteProirityRegex)
   end

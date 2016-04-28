@@ -33,6 +33,10 @@ helpers do
   def edit_link(todo)
     "<a class='small' href='/edit/#{todo.line_number}'>(edit)</a>"
   end
+
+  def done_link(todo)
+    "<a class='small' href='/done/#{todo.line_number}'>(mark as done)</a>"
+  end
 end
 
 get '/' do
@@ -71,6 +75,12 @@ end
 get '/edit/:line' do
   @todo = Todo.find(params[:line])
   erb :edit
+end
+
+get '/done/:line' do
+  @todo = Todo.find(params[:line])
+  @todo.done
+  redirect '/', 302
 end
 
 put '/update' do
